@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: spring-ai
+  autoconfigure:
+    exclude:
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioSpeechAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiImageAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioTranscriptionAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiModerationAutoConfiguration
+  ai:
+    openai:
+      chat:
+        base-url: http://10.0.76.31:30000/v1
+        api-key: sk-VZqK2MCLs1agNQPNCdB331Ee453e454b9b6b01967100Ae24
+        model: qwen3_32b
+      embedding:
+        base-url: http://10.0.76.31:30000/v1
+        api-key: sk-uAv0xzvmRhUaopOS033fC285D7D74b02A7883521F25f1eFa
+        model: bge
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+    mcp:
+      client:
+        streamable-http:
+          connections:
+            server1:
+              url: http://localhost:8088/demo/
+              endpoint: mcp
+            server2:
+              url: http://localhost:8082/monitoring/
+              endpoint: mcp
+  datasource:
+    url: jdbc:postgresql://10.10.91.181:54333/pgvector
+    username: pgvector
+    password: pgvector
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor: debug
+    com.yss.acs.ai.springai: debug
+    org.springframework.jdbc.core: DEBUG
